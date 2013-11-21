@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:zcml="http://namespaces.zope.org/zcml">
+
+    <!--
+    Event Plugins
+
+    These are useful when you want to manipulate events in a more bullet-proof
+    way than standard transforms allow. Users won't be able to change your
+    plugin code through the user interface like they could with transforms. You
+    can also more easily unit test these plugins than you can test transforms.
+
+    You can either register a preEventPlugin or a postEventPlugin.
+    preEventPlugins will be executed before any event processing is done. This
+    means that no tagging or enrichment of the event will be done. This is a
+    useful approach for early-dropping events you don't want to waste time
+    processing.
+
+    postEventPlugins will be executed after all normal event processing is
+    done. This is useful in circumstances where you need access to the tags and
+    other enrichment done during normal event processing in your plugin.
+
+    Using zcml:condition="have eventPlugins" will cause your plugins only to be
+    registered if the installed Zenoss versions supports them. Support
+    for eventPlugins was added in Zenoss 4.
+
+    See events.py for the plugin implementations.
+    -->
+
+    <configure zcml:condition="have eventPlugins">
+        <postEventPlugin plugin=".events.DatacenterPlugin"/>
+    </configure>
+
+</configure>
+
